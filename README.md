@@ -2,6 +2,7 @@
 
 ## structure
 
+```
 wallex-mcp/
 ├── wallex_mcp/
 │   ├── __init__.py
@@ -17,22 +18,15 @@ wallex-mcp/
 │       ├── market_data.py     # @mcp.resource("wallex://market/{symbol}")
 │       ├── order_status.py    # @mcp.resource("wallex://orders/{id}")
 │       └── instruments.py
-│
-├── examples/
-│   └── wallex_demo.py     # Sample client invoking your MCP server
-│
-├── tests/
-│   ├── test_client.py
-│   ├── test_tools.py
-│   └── test_resources.py
-│
-├── pyproject.toml
-├── justfile              # Common dev tasks (lint, test, run)
+├── requirements.txt
 ├── Dockerfile
 └── README.md             # Project overview + Quickstart
+```
+
 
 ## Workflow
 
+```
 flowchart LR
   subgraph MCP Server
     A[FastMCP Instance] --> B[Tool: place_order]
@@ -45,3 +39,4 @@ flowchart LR
   D --> E
   F --> G[JSON Response] --> H[wallex_mcp.schemas] --> B/C/D return
   B/C/D return --> A --> I[LLM]
+```
