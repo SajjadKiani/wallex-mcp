@@ -1,5 +1,5 @@
 '''Resource handlers for Wallex MCP server. Decorated with @mcp.resource to expose read-only endpoints.'''
-from fastmcp import mcp
+from wallex_mcp.mcp import mcp
 from wallex_mcp.client import WallexClient
 from wallex_mcp.schemas import InstrumentsResponse, MarketDataResponse, OrderResponse
 

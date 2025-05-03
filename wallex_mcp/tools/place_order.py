@@ -1,4 +1,4 @@
-from fastmcp import mcp
+from wallex_mcp.mcp import mcp
 from wallex_mcp.client import WallexClient
 from wallex_mcp.schemas import OrderRequest, OrderResponse
 
