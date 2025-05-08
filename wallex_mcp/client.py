@@ -16,8 +16,8 @@ class WallexClient:
         base_url: Optional[str] = None,
         timeout: float = 10.0,
     ):
-        self.api_key = api_key or cfg.API_KEY
-        self.base_url = base_url or cfg.BASE_URL
+        self.api_key = api_key or cfg.api_key
+        self.base_url = base_url or cfg.base_url
         self._client = httpx.AsyncClient(
             base_url=self.base_url,
             headers={"X-API-Key": self.api_key},
