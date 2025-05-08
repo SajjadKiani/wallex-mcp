@@ -66,5 +66,7 @@ pytest_cache/
 accounts.db
 cookies/
 
+*.lock
+
 # Logs
 *.log

@@ -1,26 +1,9 @@
 from pydantic import BaseModel, Field
 from decimal import Decimal
-from typing import List, Optional
+from typing import List, Optional, Dict
 from datetime import datetime
 from enum import Enum
-
-
-class OrderSide(str, Enum):
-    BUY = "buy"
-    SELL = "sell"
-
-
-class OrderRequest(BaseModel):
-    symbol: str
-    side: OrderSide
-    quantity: Decimal
-    price: Decimal
-    type: Optional[str] = Field("limit", alias="type")
-    client_order_id: Optional[str] = None
-
-    class Config:
-        allow_population_by_field_name = True
-
+from typing import Literal
 
 class Balance(BaseModel):
     currency: str
@@ -29,23 +12,40 @@ class Balance(BaseModel):
 
 
 class BalanceResponse(BaseModel):
-    account_id: str
-    balances: List[Balance]
+    balances: Dict
 
-
-class Order(BaseModel):
-    id: str
+class OrderResult(BaseModel):
     symbol: str
-    side: OrderSide
+    type: str
+    side: str
     price: Decimal
-    quantity: Decimal
+    orig_qty: Decimal = Field(..., alias='origQty')
+    orig_sum: Decimal = Field(..., alias='origSum')
+    executed_price: Decimal = Field(..., alias='executedPrice')
+    executed_qty: Decimal = Field(..., alias='executedQty')
+    executed_sum: Decimal = Field(..., alias='executedSum')
+    executed_percent: int = Field(..., alias='executedPercent')
     status: str
-    created_at: datetime
+    active: bool
+    client_order_id: str = Field(..., alias='clientOrderId')
+    created_at: datetime = Field(..., alias='created_at')
 
+    class Config:
+        allow_population_by_field_name = True
+        # let you construct with either the field names or the original aliases
+        # e.g. OrderResult(orig_qty="0.001", origQty="0.001") both work
 
 class OrderResponse(BaseModel):
-    order: Order
+    success: bool
+    message: str
+    result: OrderResult
 
+class OrderRequest(BaseModel):
+    symbol: str
+    type: Literal["LIMIT", "MARKET"]   # tighten to your API’s allowed types
+    side: Literal["BUY", "SELL"]
+    price: float
+    quantity: float
 
 class Instrument(BaseModel):
     symbol: str
@@ -56,7 +56,9 @@ class Instrument(BaseModel):
 
 
 class InstrumentsResponse(BaseModel):
-    instruments: List[Instrument]
+    result: List[Instrument]
+    message: str
+    success: bool
 
 
 class Ticker(BaseModel):

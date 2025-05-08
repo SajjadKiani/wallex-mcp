@@ -1,5 +1,17 @@
 # Wallex MCP Server
 
+## development
+
+``` bash
+fastmcp dev wallex_mcp/server.py
+```
+
+## production
+
+``` bash
+mcpo --port 8001 --api-key "wallex-local" -- fastmcp run wallex_mcp/server.py
+```
+
 ## structure
 
 ```

@@ -5,11 +5,11 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 from pydantic import Field
 
 
+
 class Settings(BaseSettings):
     # Wallex API credentials (optional for public endpoints)
     API_KEY: Optional[str] = Field(None, env=["WALLEX_API_KEY", "wallex_api_key"])
-    API_SECRET: Optional[str] = Field(None, env=["WALLEX_API_SECRET", "wallex_api_secret"])
-    BASE_URL: str = Field('https://api.wallex.ir', env=["WALLEX_BASE_URL", "wallex_base_url"])
+    BASE_URL: str = Field('https://api.wallex.ir/v1/', env=["WALLEX_BASE_URL", "wallex_base_url"])
 
     # Server binding
     HOST: str = Field('0.0.0.0', env='HOST')
